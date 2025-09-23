@@ -1,3 +1,23 @@
+#Fork of main obs-multi-rtmp adding OBS websocket server support
+Added new files:
+multi-output-widget.cpp
+multi-output-widget.h
+ws_vendor.cpp
+ws_vendor.hpp
+
+Altered files from source:
+CMakeLists.txt
+pch.h
+obs-multi-rtmp.cpp
+push-widget.h
+push-widget.cpp
+
+I used obs-websocket-5.6.3 for this version found here: https://github.com/obsproject/obs-websocket
+You specifically need to include obs-websocket-api.h
+I added it here: obs-multi-rtmp\.deps\obs-studio-31.0.0\plugins\obs-websocket\obs-websocket-api.h
+
+
+
 # [Homepage / 主页](https://sorayuki.github.io/obs-multi-rtmp)
 
 ## 为什么首页是日语？ / Why is the homepage in Japanese?
