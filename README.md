@@ -57,6 +57,9 @@ UpdateSyncStart - Sync start with OBS
 UpdateSyncStop - Sync stop with OBS  
 GetTargetStats - Get stats of a specific target  
 
+# Python test files:
+Look in the folder python_tests for 9 test files that implement each of the API functions for confirmation of websocket functionality
+
 # Build commands used for compiling on PC:
 cls  
 cd "C:\projects\v2 - 0.7.3\obs-multi-rtmp" -> adjust for your path!  
