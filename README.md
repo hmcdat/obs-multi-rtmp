@@ -1,18 +1,18 @@
 # Fork of main obs-multi-rtmp adding OBS websocket server support
 ## Added files:
-multi-output-widget.cpp  
-multi-output-widget.h  
-ws_vendor.cpp  
-ws_vendor.hpp  
+- multi-output-widget.cpp  
+- multi-output-widget.h  
+- ws_vendor.cpp  
+- ws_vendor.hpp  
 
 ## Altered files from source:
 CMakeLists.txt  
-    Added websocket support:  
-    lines 41-60  
-    lines 79-82  
-    line 88 ??  
-pch.h  
-    altered line 27-30 & 37-40 for websocket support  
+- Added websocket support:  
+  - lines 41-60  
+  - lines 79-82  
+  - line 88 ??  
+- pch.h  
+  - altered line 27-30 & 37-40 for websocket support  
 obs-multi-rtmp.cpp  
     Changes for websocket support:  
     lines 12-14  
