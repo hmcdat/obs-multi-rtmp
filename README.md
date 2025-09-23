@@ -1,39 +1,39 @@
 # Fork of main obs-multi-rtmp adding OBS websocket server support
 ## Added files:
-multi-output-widget.cpp
-multi-output-widget.h
-ws_vendor.cpp
-ws_vendor.hpp
+multi-output-widget.cpp  
+multi-output-widget.h  
+ws_vendor.cpp  
+ws_vendor.hpp  
 
 ## Altered files from source:
-CMakeLists.txt
-    Added websocket support:
-    lines 41-60
-    lines 79-82
-    line 88 ??
-pch.h
-    altered line 27-30 & 37-40 for websocket support
-obs-multi-rtmp.cpp
-    Changes for websocket support:
-    lines 12-14
-    line 55-57
-    line 71 & 87-92
-    line 99-104
-push-widget.h
-    Updated for websocket support:
-    line 1-2
-    line 6-7
-    line 9-12
-    line 19-27
-push-widget.cpp
-    Updated for websocket support:
-    line 13-18
-    line 555
-    ** I'm not sure if this is all the changes, compare them! **
+CMakeLists.txt  
+    Added websocket support:  
+    lines 41-60  
+    lines 79-82  
+    line 88 ??  
+pch.h  
+    altered line 27-30 & 37-40 for websocket support  
+obs-multi-rtmp.cpp  
+    Changes for websocket support:  
+    lines 12-14  
+    line 55-57  
+    line 71 & 87-92  
+    line 99-104  
+push-widget.h  
+    Updated for websocket support:  
+    line 1-2  
+    line 6-7  
+    line 9-12  
+    line 19-27  
+push-widget.cpp  
+    Updated for websocket support:  
+    line 13-18  
+    line 555  
+    ** I'm not sure if this is all the changes, compare them! **  
 
-I used obs-websocket-5.6.3 for this version found here: https://github.com/obsproject/obs-websocket
-You specifically need to include obs-websocket-api.h
-I added it here: obs-multi-rtmp\.deps\obs-studio-31.0.0\plugins\obs-websocket\obs-websocket-api.h
+I used obs-websocket-5.6.3 for this version found here: https://github.com/obsproject/obs-websocket  
+You specifically need to include obs-websocket-api.h  
+I added it here: obs-multi-rtmp\.deps\obs-studio-31.0.0\plugins\obs-websocket\obs-websocket-api.h  
 
 
 
