@@ -2,7 +2,7 @@
 
 Adds OBS websocket server API support to the obs-multi-rtmp plugin.
 
-# Complete Websocket API Function List:
+## Complete Websocket API Function List:
 ListTargets - Get all configured RTMP targets  
 GetTargetState - Get current state of a specific target  
 StartTarget - Start a specific target  
@@ -20,7 +20,7 @@ UpdateSyncStart - Sync start with OBS
 UpdateSyncStop - Sync stop with OBS  
 GetTargetStats - Get stats of a specific target  
 
-# Python test files:
+## Python test files:
 Look in the folder python_tests for 9 test files that implement each of the API functions for confirmation of websocket functionality
 
 ## Notes
