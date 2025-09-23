@@ -6,25 +6,30 @@
 - ws_vendor.hpp  
 
 ## Altered files from source:
+
 CMakeLists.txt  
 - Added websocket support:  
   - lines 41-60  
   - lines 79-82  
   - line 88 ??
+
 pch.h  
   - altered line 27-30 & 37-40 for websocket support
+
 obs-multi-rtmp.cpp  
   - Changes for websocket support:  
   - lines 12-14  
   - line 55-57  
   - line 71 & 87-92  
   - line 99-104  
+
 push-widget.h  
   - Updated for websocket support:  
    - line 1-2  
    - line 6-7  
    - line 9-12  
    - line 19-27  
+
 push-widget.cpp  
     - Updated for websocket support:  
      - line 13-18  
