@@ -8,7 +8,7 @@
 ## Altered files from source:
 
 CMakeLists.txt  
-- Added websocket support:  
+  - Added websocket support:  
   - lines 41-60  
   - lines 79-82  
   - line 88 ??
@@ -25,16 +25,16 @@ obs-multi-rtmp.cpp
 
 push-widget.h  
   - Updated for websocket support:  
-   - line 1-2  
-   - line 6-7  
-   - line 9-12  
-   - line 19-27  
+  - line 1-2  
+  - line 6-7  
+  - line 9-12  
+  - line 19-27  
 
 push-widget.cpp  
-    - Updated for websocket support:  
-     - line 13-18  
-     - line 555  
-     - ** I'm not sure if this is all the changes, compare them! **  
+  - Updated for websocket support:  
+  - line 13-18  
+  - line 555  
+  - ** I'm not sure if this is all the changes, compare them! **  
 
 I used obs-websocket-5.6.3 for this version found here: https://github.com/obsproject/obs-websocket  
 You specifically need to include obs-websocket-api.h  
