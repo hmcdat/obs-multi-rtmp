@@ -10,9 +10,9 @@ CMakeLists.txt
 - Added websocket support:  
   - lines 41-60  
   - lines 79-82  
-  - line 88 ??  
+  - line 88 ??
 pch.h  
-  - altered line 27-30 & 37-40 for websocket support  
+  - altered line 27-30 & 37-40 for websocket support
 obs-multi-rtmp.cpp  
   - Changes for websocket support:  
   - lines 12-14  
