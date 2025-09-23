@@ -37,7 +37,7 @@ push-widget.cpp
 
 I used obs-websocket-5.6.3 for this version found here: https://github.com/obsproject/obs-websocket  
 You specifically need to include obs-websocket-api.h  
-I added it here: obs-multi-rtmp\.deps\obs-studio-31.0.0\plugins\obs-websocket\obs-websocket-api.h  
+I added it here: obs-multi-rtmp\\.deps\obs-studio-31.0.0\plugins\obs-websocket\obs-websocket-api.h  
 
 # Complete Websocket API Function List:
 ListTargets - Get all configured RTMP targets  
