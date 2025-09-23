@@ -1,4 +1,31 @@
-# Fork of main obs-multi-rtmp adding OBS websocket server support
+# Fork of main obs-multi-rtmp adding OBS websocket server API support
+
+Adds OBS websocket server API support to the obs-multi-rtmp plugin.
+
+# Complete Websocket API Function List:
+ListTargets - Get all configured RTMP targets  
+GetTargetState - Get current state of a specific target  
+StartTarget - Start a specific target  
+StopTarget - Stop a specific target  
+ToggleTarget - Toggle start/stop state of a target  
+StartAll - Start all targets  
+StopAll - Stop all targets  
+AddTarget - Add a new target  
+CloneTarget - Clone an existing target  
+UpdateTargetName - Update target name  
+UpdateStreamKey - Update target stream key  
+UpdateServiceParam - Update service parameter  
+DeleteTarget - Delete a target  
+UpdateSyncStart - Sync start with OBS  
+UpdateSyncStop - Sync stop with OBS  
+GetTargetStats - Get stats of a specific target  
+
+# Python test files:
+Look in the folder python_tests for 9 test files that implement each of the API functions for confirmation of websocket functionality
+
+## Notes
+I could only compile this for Windows PC. If anyone can help compile and/or package for Mac OS, Linux or Windows installer please let me know!
+
 ## Added files:
 - multi-output-widget.cpp  
 - multi-output-widget.h  
@@ -38,27 +65,6 @@ push-widget.cpp
 I used obs-websocket-5.6.3 for this version found here: https://github.com/obsproject/obs-websocket  
 You specifically need to include obs-websocket-api.h  
 I added it here: obs-multi-rtmp\\.deps\obs-studio-31.0.0\plugins\obs-websocket\obs-websocket-api.h  
-
-# Complete Websocket API Function List:
-ListTargets - Get all configured RTMP targets  
-GetTargetState - Get current state of a specific target  
-StartTarget - Start a specific target  
-StopTarget - Stop a specific target  
-ToggleTarget - Toggle start/stop state of a target  
-StartAll - Start all targets  
-StopAll - Stop all targets  
-AddTarget - Add a new target  
-CloneTarget - Clone an existing target  
-UpdateTargetName - Update target name  
-UpdateStreamKey - Update target stream key  
-UpdateServiceParam - Update service parameter  
-DeleteTarget - Delete a target  
-UpdateSyncStart - Sync start with OBS  
-UpdateSyncStop - Sync stop with OBS  
-GetTargetStats - Get stats of a specific target  
-
-# Python test files:
-Look in the folder python_tests for 9 test files that implement each of the API functions for confirmation of websocket functionality
 
 # Build commands used for compiling on PC:
 cls  
