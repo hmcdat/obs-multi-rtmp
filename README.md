@@ -1,4 +1,4 @@
-#Fork of main obs-multi-rtmp adding OBS websocket server support
+# Fork of main obs-multi-rtmp adding OBS websocket server support
 Added new files:
 multi-output-widget.cpp
 multi-output-widget.h
