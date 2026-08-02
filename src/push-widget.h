@@ -6,6 +6,15 @@
 //added for websocket
 #include "output-config.h"
 
+enum class TargetStatus {
+    Stopped,
+    Connecting,
+    Running,
+    Reconnecting,
+    Stopping,
+    Error,
+};
+
 struct TargetOutputStats {
     uint64_t totalFrames = 0;
     uint64_t droppedFrames = 0;
@@ -29,6 +38,7 @@ public:
     virtual QString GetTargetName() const = 0;
     virtual QString GetStatusText() const = 0;
     virtual bool IsRunning() const = 0;
+    virtual TargetStatus GetStatus() const = 0;
     virtual TargetOutputStats GetOutputStats() const = 0;
     virtual void UpdateUI() = 0;
     

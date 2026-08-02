@@ -125,6 +125,7 @@ class PushWidgetImpl : public PushWidget, public IOBSOutputEventHanlder
     bool using_main_audio_encoder_ = false;
     obs_view_t* scene_view_ = 0;
     bool isUseDelay_ = false;
+    TargetStatus status_ = TargetStatus::Stopped;
 
     QPushButton* GetDeleteButton() override {
         return remove_btn_;
@@ -616,6 +617,10 @@ public:
         return output_ != nullptr && obs_output_active(output_);
     }
 
+    TargetStatus GetStatus() const override {
+        return status_;
+    }
+
     TargetOutputStats GetOutputStats() const override {
         if (!output_) {
             return {};
@@ -716,6 +721,7 @@ public:
                 useForce = true;
         }
 
+        status_ = TargetStatus::Stopping;
         if (!useForce)
             obs_output_stop(output_);
         else
@@ -801,6 +807,7 @@ public:
     void OnStarting() override
     {
         GetGlobalService().RunInUIThread([this]() {
+            status_ = TargetStatus::Connecting;
             begin_time_ = clock::now();
             remove_btn_->setEnabled(false);
             btn_->setText(obs_module_text("Status.Stop"));
@@ -813,6 +820,7 @@ public:
     void OnStarted() override
     {
         GetGlobalService().RunInUIThread([this]() {
+            status_ = TargetStatus::Running;
             remove_btn_->setEnabled(false);
             btn_->setText(obs_module_text("Status.Stop"));
             btn_->setEnabled(true);
@@ -826,6 +834,7 @@ public:
     void OnReconnect() override
     {
         GetGlobalService().RunInUIThread([this]() {
+            status_ = TargetStatus::Reconnecting;
             timer_->stop();
 
             remove_btn_->setEnabled(false);
@@ -838,6 +847,7 @@ public:
     void OnReconnected() override
     {
         GetGlobalService().RunInUIThread([this]() {
+            status_ = TargetStatus::Running;
             remove_btn_->setEnabled(false);
             btn_->setText(obs_module_text("Status.Stop"));
             btn_->setEnabled(true);
@@ -851,6 +861,7 @@ public:
     void OnStopping() override
     {
         GetGlobalService().RunInUIThread([this]() {
+            status_ = TargetStatus::Stopping;
             timer_->stop();
 
             remove_btn_->setEnabled(false);
@@ -863,6 +874,7 @@ public:
     void OnStopped(int code) override
     {
         GetGlobalService().RunInUIThread([this, code]() {
+            status_ = code == 0 ? TargetStatus::Stopped : TargetStatus::Error;
             ResetInfo();
             timer_->stop();
 
