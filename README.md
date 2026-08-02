@@ -18,7 +18,7 @@ UpdateServiceParam - Update service parameter
 DeleteTarget - Delete a target  
 UpdateSyncStart - Sync start with OBS  
 UpdateSyncStop - Sync stop with OBS  
-GetTargetStats - Get per-target state, bitrate, FPS, total frames/bytes, dropped frames, and congestion  
+GetTargetStats - Get per-target state, bitrate, FPS, encoder resolution, total frames/bytes, dropped frames, and congestion  
 
 ## Python test files:
 Look in the folder python_tests for 9 test files that implement each of the API functions for confirmation of websocket functionality

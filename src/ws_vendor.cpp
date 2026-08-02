@@ -788,12 +788,27 @@ bool MultiRTMPWebsocketVendor::HandleGetTargetStats(obs_data_t* request_data, ob
     }
     
     QString statusText;
+    QString encoderResolution;
     bool isRunning = false;
+    bool usesMainEncoder = true;
     TargetOutputStats outputStats;
-    QMetaObject::invokeMethod(targetWidget, [targetWidget, &statusText, &isRunning, &outputStats]() {
+    QMetaObject::invokeMethod(targetWidget, [targetWidget, &statusText, &encoderResolution, &isRunning, &usesMainEncoder, &outputStats]() {
         statusText = targetWidget->GetStatusText();
         isRunning = targetWidget->IsRunning();
         outputStats = targetWidget->GetOutputStats();
+
+        const auto targetConfig = targetWidget->GetConfig();
+        if (!targetConfig || !targetConfig->videoConfig.has_value()) {
+            return;
+        }
+
+        const auto videoConfig = FindById(GlobalMultiOutputConfig().videoConfig, *targetConfig->videoConfig);
+        if (!videoConfig) {
+            return;
+        }
+
+        usesMainEncoder = false;
+        encoderResolution = QString::fromStdString(videoConfig->resolution.value_or(""));
     }, Qt::BlockingQueuedConnection);
     
     // Parse the status text to extract structured data
@@ -804,6 +819,8 @@ bool MultiRTMPWebsocketVendor::HandleGetTargetStats(obs_data_t* request_data, ob
     obs_data_set_string(response_data, "name", targetWidget->GetTargetName().toUtf8().constData());
     obs_data_set_bool(response_data, "isRunning", isRunning);
     obs_data_set_string(response_data, "rawStatus", statusText.toUtf8().constData());
+    obs_data_set_string(response_data, "encoderResolution", encoderResolution.toUtf8().constData());
+    obs_data_set_bool(response_data, "usesMainEncoder", usesMainEncoder);
 
     const double droppedFramesPercent = outputStats.totalFrames == 0
         ? 0.0
