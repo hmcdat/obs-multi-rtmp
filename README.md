@@ -66,15 +66,31 @@ I used obs-websocket-5.6.3 for this version found here: https://github.com/obspr
 You specifically need to include obs-websocket-api.h  
 I added it here: obs-multi-rtmp\\.deps\obs-studio-31.0.0\plugins\obs-websocket\obs-websocket-api.h  
 
-# Build commands used for compiling on PC:
-cls  
-cd "C:\projects\v2 - 0.7.3\obs-multi-rtmp" -> adjust for your path!  
-rmdir /s /q build  
-mkdir build  
-cd build  
-cls  
-cmake .. -G "Visual Studio 17 2022" -A x64 -DENABLE_QT=ON -DENABLE_FRONTEND_API=ON -DENABLE_WEBSOCKET=ON  
-cmake --build . --config Release  
+## Building WebSocket vendor support on Windows
+
+Initialize the pinned OBS WebSocket API submodule before configuring:
+
+```bat
+git submodule update --init --recursive
+cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DENABLE_QT=ON -DENABLE_FRONTEND_API=ON -DENABLE_WEBSOCKET=ON
+cmake --build build --config Release
+```
+
+`ENABLE_WEBSOCKET=ON` is required for vendor requests. Configuration fails if
+`obs-websocket-api.h` cannot be found; it must not silently produce a plugin
+without vendor support.
+
+After replacing the old plugin DLL with the newly built DLL and restarting
+OBS, verify these messages in the OBS log:
+
+```text
+Websocket support enabled, attempting to register vendor
+Vendor registered successfully: sorayuki.multi_rtmp
+All vendor requests registered successfully
+```
+
+Clients can then use OBS `CallVendorRequest` with vendor name
+`sorayuki.multi_rtmp` and request type `ListTargets` or `GetTargetStats`.
 
 # [Homepage / 主页](https://sorayuki.github.io/obs-multi-rtmp)
 

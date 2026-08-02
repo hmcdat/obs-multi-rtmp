@@ -29,6 +29,10 @@ MultiRTMPWebsocketVendor* MultiRTMPWebsocketVendor::Instance() {
 
 bool MultiRTMPWebsocketVendor::Initialize() {
 #ifdef ENABLE_WEBSOCKET
+    if (m_vendorHandle) {
+        return true;
+    }
+
     blog(LOG_INFO, TAG "Websocket support enabled, attempting to register vendor");
     
     // ✅ Use the header API directly - no dynamic loading!
