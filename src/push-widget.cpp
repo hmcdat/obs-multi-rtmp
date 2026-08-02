@@ -130,10 +130,6 @@ class PushWidgetImpl : public PushWidget, public IOBSOutputEventHanlder
         return remove_btn_;
     }
 
-    // State tracking for websocket access
-    bool isRunning_ = false;
-    bool isStopping_ = false;
-
     bool PrepareOutputService()
     {
         if (!output_) {
@@ -617,7 +613,20 @@ public:
     }
     
     bool IsRunning() const override {
-        return isRunning_;
+        return output_ != nullptr && obs_output_active(output_);
+    }
+
+    TargetOutputStats GetOutputStats() const override {
+        if (!output_) {
+            return {};
+        }
+
+        return {
+            obs_output_get_total_frames(output_),
+            obs_output_get_frames_dropped(output_),
+            obs_output_get_total_bytes(output_),
+            obs_output_get_congestion(output_),
+        };
     }
     
     void UpdateUI() override {

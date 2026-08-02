@@ -787,10 +787,13 @@ bool MultiRTMPWebsocketVendor::HandleGetTargetStats(obs_data_t* request_data, ob
         return false;
     }
     
-    // Get the status text (this is thread-safe)
     QString statusText;
-    QMetaObject::invokeMethod(targetWidget, [targetWidget, &statusText]() {
+    bool isRunning = false;
+    TargetOutputStats outputStats;
+    QMetaObject::invokeMethod(targetWidget, [targetWidget, &statusText, &isRunning, &outputStats]() {
         statusText = targetWidget->GetStatusText();
+        isRunning = targetWidget->IsRunning();
+        outputStats = targetWidget->GetOutputStats();
     }, Qt::BlockingQueuedConnection);
     
     // Parse the status text to extract structured data
@@ -799,9 +802,18 @@ bool MultiRTMPWebsocketVendor::HandleGetTargetStats(obs_data_t* request_data, ob
     // Add basic target info
     obs_data_set_string(response_data, "id", targetWidget->GetTargetId().toUtf8().constData());
     obs_data_set_string(response_data, "name", targetWidget->GetTargetName().toUtf8().constData());
-    obs_data_set_bool(response_data, "isRunning", targetWidget->IsRunning());
+    obs_data_set_bool(response_data, "isRunning", isRunning);
     obs_data_set_string(response_data, "rawStatus", statusText.toUtf8().constData());
-    
+
+    const double droppedFramesPercent = outputStats.totalFrames == 0
+        ? 0.0
+        : static_cast<double>(outputStats.droppedFrames) * 100.0 / outputStats.totalFrames;
+    obs_data_set_int(response_data, "totalFrames", static_cast<long long>(outputStats.totalFrames));
+    obs_data_set_int(response_data, "droppedFrames", static_cast<long long>(outputStats.droppedFrames));
+    obs_data_set_double(response_data, "droppedFramesPercent", droppedFramesPercent);
+    obs_data_set_int(response_data, "totalBytes", static_cast<long long>(outputStats.totalBytes));
+    obs_data_set_double(response_data, "congestion", outputStats.congestion);
+
     return true;
 }
 
