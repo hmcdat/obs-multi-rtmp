@@ -6,6 +6,13 @@
 //added for websocket
 #include "output-config.h"
 
+struct TargetOutputStats {
+    uint64_t totalFrames = 0;
+    uint64_t droppedFrames = 0;
+    uint64_t totalBytes = 0;
+    float congestion = 0.0f;
+};
+
 class PushWidget : public QWidget {
     Q_OBJECT
 public:
@@ -22,6 +29,7 @@ public:
     virtual QString GetTargetName() const = 0;
     virtual QString GetStatusText() const = 0;
     virtual bool IsRunning() const = 0;
+    virtual TargetOutputStats GetOutputStats() const = 0;
     virtual void UpdateUI() = 0;
     
     // Add this method to access config
