@@ -10,6 +10,13 @@
 
 #include "obs.hpp"
 
+// PushWidget constructor implementation for websocket
+PushWidget::PushWidget(const std::string& targetid, QWidget* parent)
+    : QWidget(parent)
+{
+    // Base constructor - can be empty
+}
+
 class IOBSOutputEventHanlder
 {
 public:
@@ -119,9 +126,13 @@ class PushWidgetImpl : public PushWidget, public IOBSOutputEventHanlder
     obs_view_t* scene_view_ = 0;
     bool isUseDelay_ = false;
 
-    QPushButton* GetDeleteButton() {
+    QPushButton* GetDeleteButton() override {
         return remove_btn_;
     }
+
+    // State tracking for websocket access
+    bool isRunning_ = false;
+    bool isStopping_ = false;
 
     bool PrepareOutputService()
     {
@@ -544,7 +555,7 @@ class PushWidgetImpl : public PushWidget, public IOBSOutputEventHanlder
 
 public:
     PushWidgetImpl(const std::string& targetid, QWidget* parent = 0)
-        : QWidget(parent)
+        : PushWidget(targetid, parent)  // Explicitly call PushWidget constructor for websocket
         , targetid_(targetid)
     {
         QObject::setObjectName("push-widget");
@@ -587,6 +598,31 @@ public:
         ReleaseOutput();
     }
 
+    // Websocket access methods
+
+    OutputTargetConfigPtr GetConfig() const override {
+        return config_;
+    }
+
+    QString GetTargetId() const override {
+        return QString::fromStdString(config_->id);
+    }
+    
+    QString GetTargetName() const override {
+        return QString::fromStdString(config_->name);
+    }
+
+    QString GetStatusText() const override {
+        return msg_->text();
+    }
+    
+    bool IsRunning() const override {
+        return isRunning_;
+    }
+    
+    void UpdateUI() override {
+        LoadConfig();
+    }
 
     void StartStreaming() override {
         if (IsRunning())
