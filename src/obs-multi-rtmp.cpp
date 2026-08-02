@@ -98,6 +98,8 @@ private:
 };
 
 
+#if 0
+// Replaced by the WebSocket-capable implementation in multi-output-widget.cpp.
 class MultiOutputWidget : public QWidget
 {
 public:
@@ -442,6 +444,7 @@ private:
         return pushWidget;
     }
 };
+#endif
 
 OBS_DECLARE_MODULE()
 OBS_MODULE_USE_DEFAULT_LOCALE("obs-multi-rtmp", "en-US")

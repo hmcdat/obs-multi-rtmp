@@ -11,7 +11,7 @@
 #include "obs.hpp"
 
 // PushWidget constructor implementation for websocket
-PushWidget::PushWidget(const std::string& targetid, QWidget* parent)
+PushWidget::PushWidget(const std::string&, QWidget* parent)
     : QWidget(parent)
 {
     // Base constructor - can be empty

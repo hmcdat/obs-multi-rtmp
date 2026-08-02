@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 #include "pch.h"
 #include "push-widget.h"
 
