@@ -12,6 +12,7 @@
 #include <QDialog>
 #include <QTabWidget>
 #include <QMainWindow>
+#include <QSet>
 
 MultiOutputWidget::MultiOutputWidget(QWidget* parent)
     : QWidget(parent)
