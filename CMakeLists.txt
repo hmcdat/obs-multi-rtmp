@@ -40,24 +40,28 @@ if(ENABLE_QT)
 endif()
 
 if(ENABLE_WEBSOCKET)
-  # Try to find obs-websocket headers
   find_path(OBS_WEBSOCKET_INCLUDE_DIR
     NAMES obs-websocket-api.h
     PATHS
-      "${CMAKE_CURRENT_SOURCE_DIR}/.deps/obs-studio-32.2.1/build_x64/plugins/obs-websocket"
-      "${CMAKE_CURRENT_SOURCE_DIR}/.deps/obs-studio-32.2.1/plugins/obs-websocket"
+      "${CMAKE_CURRENT_SOURCE_DIR}/dep/obs-websocket/lib"
+      "${CMAKE_CURRENT_SOURCE_DIR}/.deps/obs-studio-32.2.1/build_x64/plugins/obs-websocket/lib"
+      "${CMAKE_CURRENT_SOURCE_DIR}/.deps/obs-studio-32.2.1/plugins/obs-websocket/lib"
       /usr/include
       /usr/local/include
   )
 
-  if(OBS_WEBSOCKET_INCLUDE_DIR)
-    target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${OBS_WEBSOCKET_INCLUDE_DIR})
-    target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE ENABLE_WEBSOCKET=1)
-    message(STATUS "Found obs-websocket headers: ${OBS_WEBSOCKET_INCLUDE_DIR}")
-  else()
-    message(WARNING "obs-websocket headers not found, websocket support disabled")
-    set(ENABLE_WEBSOCKET OFF)
+  if(NOT OBS_WEBSOCKET_INCLUDE_DIR)
+    message(
+      FATAL_ERROR
+      "ENABLE_WEBSOCKET=ON requires obs-websocket-api.h. Run "
+      "'git submodule update --init --recursive' or set OBS_WEBSOCKET_INCLUDE_DIR."
+    )
   endif()
+
+  target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${OBS_WEBSOCKET_INCLUDE_DIR})
+  target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE ENABLE_WEBSOCKET=1)
+  message(STATUS "OBS WebSocket vendor support enabled (ENABLE_WEBSOCKET=1)")
+  message(STATUS "Using obs-websocket headers: ${OBS_WEBSOCKET_INCLUDE_DIR}")
 endif()
 
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE

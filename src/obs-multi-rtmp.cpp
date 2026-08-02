@@ -475,7 +475,6 @@ bool obs_module_load()
 
     blog(LOG_INFO, TAG "version: %s by SoraYuki https://github.com/sorayuki/obs-multi-rtmp/", PLUGIN_VERSION);
 
-    // ✅ ADD THIS: Listen for module load events to detect when obs-websocket loads
     obs_frontend_add_event_callback(
         [](enum obs_frontend_event event, void *private_data) {
             auto dock = static_cast<MultiOutputWidget*>(private_data);
@@ -491,16 +490,15 @@ bool obs_module_load()
             {
                 dock->LoadConfig();
             }
-            // ✅ ADD THIS: Check if obs-websocket is now loaded
-            else if (event == obs_frontend_event::OBS_FRONTEND_EVENT_FINISHED_LOADING)
-            {
-                // Try to initialize vendor after all modules are loaded
-                MultiRTMPWebsocketVendor::Instance()->Initialize();
-            }
         }, dock
     );
 
     return true;
+}
+
+void obs_module_post_load(void)
+{
+    MultiRTMPWebsocketVendor::Instance()->Initialize();
 }
 
 void obs_module_unload(void)
