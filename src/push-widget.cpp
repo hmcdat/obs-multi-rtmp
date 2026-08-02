@@ -622,8 +622,8 @@ public:
         }
 
         return {
-            obs_output_get_total_frames(output_),
-            obs_output_get_frames_dropped(output_),
+            static_cast<uint64_t>(obs_output_get_total_frames(output_)),
+            static_cast<uint64_t>(obs_output_get_frames_dropped(output_)),
             obs_output_get_total_bytes(output_),
             obs_output_get_congestion(output_),
         };
