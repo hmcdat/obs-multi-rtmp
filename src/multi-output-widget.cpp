@@ -33,6 +33,7 @@ MultiOutputWidget::MultiOutputWidget(QWidget* parent)
         global.targets.emplace_back(target);
         auto pushwidget = createPushWidget(newid, container_);
         itemLayout_->addWidget(pushwidget);
+        ConnectDeleteButton(pushwidget);
         if (pushwidget->ShowEditDlg())
             SaveConfig();
         else {
@@ -207,6 +208,23 @@ void MultiOutputWidget::SaveConfig()
     SaveMultiOutputConfig();
 }
 
+void MultiOutputWidget::ConnectDeleteButton(PushWidget* pushWidget)
+{
+    QObject::connect(pushWidget->GetDeleteButton(), &QPushButton::clicked, this,
+        [this, targetId = pushWidget->GetTargetId()]() {
+            const auto confirmation = QMessageBox::question(
+                this,
+                obs_module_text("Question.Title"),
+                obs_module_text("Question.Delete"),
+                QMessageBox::Yes | QMessageBox::No
+            );
+            if (confirmation == QMessageBox::Yes) {
+                DeleteTarget(targetId);
+            }
+        }
+    );
+}
+
 void MultiOutputWidget::LoadConfig()
 {
     // Clear existing widgets safely
@@ -225,6 +243,7 @@ void MultiOutputWidget::LoadConfig()
         {
             auto pushwidget = createPushWidget(x->id, container_);
             itemLayout_->addWidget(pushwidget);
+            ConnectDeleteButton(pushwidget);
         }
     }
 }
