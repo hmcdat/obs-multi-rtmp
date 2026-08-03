@@ -30,6 +30,8 @@ public slots:  // ✅ CHANGED: Declare RefreshUI as a slot
     PushWidget* FindPushWidgetById(const QString& targetId);
 
 private:
+    void ConnectDeleteButton(PushWidget* pushWidget);
+
     QWidget* container_ = 0;
     QScrollArea scroll_;
     QVBoxLayout* itemLayout_ = 0;
